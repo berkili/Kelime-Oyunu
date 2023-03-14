@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
 
   Widget buildAbout(User user) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 48),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: StatCard(
           loseRate: user.winMatch,
           winRate: user.loseMatch,

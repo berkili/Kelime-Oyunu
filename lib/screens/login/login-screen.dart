@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        title: const Text("Uygulama Adı"),
+        title: const Text("Spinning Quiz"),
         centerTitle: true,
       ),
       body: MainBackground(

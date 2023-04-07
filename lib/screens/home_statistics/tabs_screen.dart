@@ -25,7 +25,7 @@ class _TabsScreenState extends State<TabsScreen> {
   ];
 
   final _titles = [
-    "Uygulama Adı",
+    "Spinning Quiz",
     "Sıralama",
   ];
 
@@ -80,7 +80,7 @@ class _TabsScreenState extends State<TabsScreen> {
             const DrawerHeader(
               decoration: BoxDecoration(color: Colors.transparent),
               child: Text(
-                'Uygulama Adı',
+                'Spinning Quiz',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 40,

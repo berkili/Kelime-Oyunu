@@ -10,7 +10,7 @@ class WelcomeText extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          "Uygulama Adı",
+          "Spinning Quiz",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,

@@ -18,14 +18,15 @@ class HomeBackground extends StatelessWidget {
           Material(
             child: Container(
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                colors: [
-                  Color(0xff673ab7),
-                  Color(0xff8bc34a),
-                ],
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-              )),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xff673ab7),
+                    Color(0xff8bc34a),
+                  ],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                ),
+              ),
             ),
           ),
           SafeArea(

@@ -1,3 +1,5 @@
+import 'package:final_year_project/screens/game/gamehome.dart';
+import 'package:final_year_project/screens/game/questions.dart';
 import 'package:final_year_project/screens/home_statistics/widgets/home_background.dart';
 import 'package:final_year_project/screens/home_statistics/widgets/home_info.dart';
 import 'package:flutter/material.dart';
@@ -66,11 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 100,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => const GameHome()));
+              },
               style: ElevatedButton.styleFrom(
                 // ignore: todo
                 //TODO: Oyna butonu büyütülecek ve rengi değiştirilecek
-                fixedSize: const Size(200, 200),
+                minimumSize: const Size(56, 56),
                 shape: const CircleBorder(),
               ),
               child: const Text('OYNA'),
@@ -78,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 100,
             ),
-            HomeGameInfo(),
+            const HomeGameInfo(),
           ],
         ),
       ),

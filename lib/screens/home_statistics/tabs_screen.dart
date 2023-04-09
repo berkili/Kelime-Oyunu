@@ -3,6 +3,7 @@ import 'package:final_year_project/screens/home_statistics/statistics_screen.dar
 import 'package:final_year_project/screens/tabs/achievement_screen.dart';
 import 'package:final_year_project/screens/tabs/profile_screen.dart';
 import 'package:final_year_project/screens/tabs/settings_screen.dart';
+import 'package:final_year_project/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -102,18 +103,18 @@ class _TabsScreenState extends State<TabsScreen> {
                 );
               }),
             ),
-            buildListTile(
-              'Başarımlar',
-              FontAwesomeIcons.trophy,
-              (() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AchivementScreen(),
-                  ),
-                );
-              }),
-            ),
+            // buildListTile(
+            //   'Başarımlar',
+            //   FontAwesomeIcons.trophy,
+            //   (() {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => const AchivementScreen(),
+            //       ),
+            //     );
+            //   }),
+            // ),
             buildListTile(
               'Ayarlar',
               Icons.settings,
@@ -122,6 +123,18 @@ class _TabsScreenState extends State<TabsScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              }),
+            ),
+            buildListTile(
+              'Çıkış Yap',
+              Icons.exit_to_app,
+              (() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WelcomeScreen(),
                   ),
                 );
               }),

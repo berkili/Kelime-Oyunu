@@ -1,3 +1,7 @@
+import 'package:final_year_project/screens/home_statistics/home_screen.dart';
+import 'package:final_year_project/screens/home_statistics/tabs_screen.dart';
+import 'package:final_year_project/screens/login/login-screen.dart';
+import 'package:final_year_project/screens/signup/signup-screen.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/welcome/welcome_screen.dart';
@@ -39,7 +43,20 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: const WelcomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (ctx) => const WelcomeScreen(),
+        //'/welcome' : (ctx) => WelcomeScreen(),
+        '/login': (ctx) => const LoginScreen(),
+        '/signup': (ctx) => const SignupScreen(),
+        '/home': (ctx) => const TabsScreen(),
+        //TODO:Geri kalan yönlendirmeler yapılacak.
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (ctx) => const TabsScreen(),
+        );
+      },
     );
   }
 }

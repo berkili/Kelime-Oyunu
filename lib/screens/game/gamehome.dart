@@ -149,6 +149,7 @@ class _GameHomeState extends State<GameHome> {
                   child: TextButton(
                       onPressed: () {
                         controller.add(random.nextInt(4));
+                        //BUG: Açılır açılmaz dönüyor çark
                         //BUG: Dönmeden diğer sayfaya geçiyor.
                         //TODO: Bu kısımda questions sayfasına kategori parametre olarak gönderilecek.
                         Navigator.push(

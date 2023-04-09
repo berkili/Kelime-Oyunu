@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:final_year_project/screens/game/levelresult.dart';
 import 'package:final_year_project/screens/game/theme/color.dart';
-import 'package:final_year_project/screens/game/widget/myimage.dart';
 import 'package:final_year_project/screens/game/widget/mytext.dart';
 
 class Questions extends StatefulWidget {
@@ -92,32 +91,17 @@ class _QuestionsState extends State<Questions> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
           child: AppBar(
-            title: Center(
-              child: MyText(
-                title: "Level 1",
-                size: 18,
-                fontWeight: FontWeight.w400,
-                colors: white,
-              ),
+            title: MyText(
+              title: "Soru Kategorisi",
+              size: 18,
+              fontWeight: FontWeight.w400,
+              colors: white,
             ),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white, size: 30),
               onPressed: () => Navigator.of(context).pop(),
             ),
             backgroundColor: Colors.transparent,
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
-                    child: Center(
-                      child: MyText(
-                          title: "6 / 10",
-                          size: 18,
-                          fontWeight: FontWeight.w400,
-                          colors: white),
-                    ),
-                  )),
-            ],
           ),
         ),
         body: SafeArea(
@@ -171,53 +155,7 @@ class _QuestionsState extends State<Questions> {
                                   progressColor: Colors.redAccent,
                                 ),
                               ),
-                            ),
-                            // Question Count
-                            Positioned(
-                              top: 50,
-                              width: MediaQuery.of(context).size.width,
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.only(left: 30, right: 30),
-                                child: Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        MyText(title: "3"),
-                                        LinearPercentIndicator(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3,
-                                          animation: false,
-                                          lineHeight: 3.0,
-                                          percent: 0.5,
-                                          barRadius: const Radius.circular(20),
-                                          progressColor: Colors.greenAccent,
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Row(
-                                      children: [
-                                        LinearPercentIndicator(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3,
-                                          animation: false,
-                                          lineHeight: 3.0,
-                                          percent: 0.5,
-                                          barRadius: const Radius.circular(20),
-                                          progressColor: Colors.red,
-                                        ),
-                                        MyText(title: "4"),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
+                            ), // Question Count
                           ],
                         ),
                       ),
@@ -353,40 +291,6 @@ class _QuestionsState extends State<Questions> {
                                                     color: primary))))),
                               ),
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                                height: 50,
-                                child: TextButton(
-                                    onPressed: () {
-                                      if (quecnt < question.length - 1) {
-                                        quecnt++;
-                                      } else {
-                                        Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        const LevelResult()));
-                                      }
-                                      setState(() {});
-                                    },
-                                    child: MyText(
-                                      title: "Next",
-                                      colors: black,
-                                      fontWeight: FontWeight.w500,
-                                      size: 16,
-                                    ),
-                                    style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(25.0),
-                                                side: const BorderSide(
-                                                    color: textColorGrey))))),
-                              ),
-                            ),
                           ],
                         ),
                       )
@@ -394,11 +298,6 @@ class _QuestionsState extends State<Questions> {
                   ),
                 ),
               ),
-              MyImage(
-                height: 80,
-                width: 80,
-                imagePath: "assets/images/ic_close.png",
-              )
             ],
           ),
         ),

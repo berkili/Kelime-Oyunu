@@ -1,3 +1,4 @@
+import 'package:final_year_project/mySplashScreen.dart';
 import 'package:final_year_project/screens/home_statistics/home_screen.dart';
 import 'package:final_year_project/screens/home_statistics/tabs_screen.dart';
 import 'package:final_year_project/screens/login/login-screen.dart';
@@ -45,8 +46,8 @@ class MyApp extends StatelessWidget {
           )),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => const WelcomeScreen(),
-        //'/welcome' : (ctx) => WelcomeScreen(),
+        '/': (ctx) => const MySplashScreen(),
+        '/welcome': (ctx) => WelcomeScreen(),
         '/login': (ctx) => const LoginScreen(),
         '/signup': (ctx) => const SignupScreen(),
         '/home': (ctx) => const TabsScreen(),

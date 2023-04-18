@@ -1,27 +1,68 @@
+import 'package:final_year_project/screens/home_statistics/tabs_screen.dart';
 import 'package:final_year_project/screens/login/login-screen.dart';
 import 'package:final_year_project/screens/signup/signup-screen.dart';
 import 'package:final_year_project/screens/welcome/widgets/or-divider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class WelcomeButtons extends StatelessWidget {
+//BUG: Google ile bir kez giriş yapıldıktan sonra tekrar giriş yapılırken hesap seçme ekranı gelmeden giriş yapıyor.
+class WelcomeButtons extends StatefulWidget {
   const WelcomeButtons({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<WelcomeButtons> createState() => _WelcomeButtonsState();
+}
+
+class _WelcomeButtonsState extends State<WelcomeButtons> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<User?> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth =
+          await googleSignInAccount.authentication;
+
+      // Create a new credential
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      return user;
+    }
+
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ElevatedButton(
-          onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) {
-            //       return Text("dart");
-            //     },
-            //   ),
-            // );
+          onPressed: () async {
+            User? user = await signInWithGoogle();
+            if (user != null) {
+              // ignore: use_build_context_synchronously
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TabsScreen(),
+                ),
+              );
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white70,
@@ -52,16 +93,7 @@ class WelcomeButtons extends StatelessWidget {
         ),
         const SizedBox(height: 16.0 * 1),
         ElevatedButton(
-          onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) {
-            //       return Text("dart");
-            //     },
-            //   ),
-            // );
-          },
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white70,
             minimumSize: const Size.fromHeight(50),

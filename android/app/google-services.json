@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "41688684844",
+    "project_id": "spinning-quiz",
+    "storage_bucket": "spinning-quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41688684844:android:22342743bfded3ae47f489",
+        "android_client_info": {
+          "package_name": "com.berkili.spinningQuiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41688684844-20m4muc1bh5dqmg0b1uf20eisirlf9ik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.berkili.spinningQuiz",
+            "certificate_hash": "110cf3d0b01726f9c05bcc2ccb34e64c37c571be"
+          }
+        },
+        {
+          "client_id": "41688684844-e0u544esguv1ps8big70v7l8f31odaqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbccECoNRVyHtUK7cj-bR203OMdlEXR14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41688684844-9t2gcbhlf2bobr9sahu1uqg1hn4tdnti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41688684844:android:f6705872c6dd209147f489",
+        "android_client_info": {
+          "package_name": "com.example.final_year_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41688684844-e0u544esguv1ps8big70v7l8f31odaqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbccECoNRVyHtUK7cj-bR203OMdlEXR14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41688684844-9t2gcbhlf2bobr9sahu1uqg1hn4tdnti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -41,6 +41,9 @@ dependencies:
   percent_indicator: ^4.2.3
   google_fonts: ^4.0.3
   flutter_fortune_wheel: ^1.2.0
+  firebase_auth: ^4.4.1
+  firebase_core: ^2.9.0
+  firebase_app_check: ^0.1.2+1
 
 dev_dependencies:
   flutter_test:

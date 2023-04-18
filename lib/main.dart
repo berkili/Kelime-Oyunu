@@ -1,13 +1,19 @@
+import 'package:final_year_project/firebase_options.dart';
 import 'package:final_year_project/mySplashScreen.dart';
 import 'package:final_year_project/screens/home_statistics/home_screen.dart';
 import 'package:final_year_project/screens/home_statistics/tabs_screen.dart';
 import 'package:final_year_project/screens/login/login-screen.dart';
 import 'package:final_year_project/screens/signup/signup-screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 import 'screens/welcome/welcome_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseAppCheck.instance.activate();
   runApp(const MyApp());
 }
 

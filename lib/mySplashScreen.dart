@@ -1,4 +1,6 @@
+import 'package:final_year_project/screens/home_statistics/tabs_screen.dart';
 import 'package:final_year_project/screens/welcome/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MySplashScreen extends StatefulWidget {
@@ -12,6 +14,10 @@ class _MySplashScreenState extends State<MySplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -21,10 +27,19 @@ class _MySplashScreenState extends State<MySplashScreen>
     )..repeat();
 
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-      );
+      final user = _auth.currentUser;
+      if (user != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const TabsScreen()),
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+        );
+      }
+      setState(() {
+        _isLoading = false;
+      });
     });
   }
 

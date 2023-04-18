@@ -22,13 +22,13 @@ class SignupScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
-                children: const [
-                  Spacer(),
+                children: [
+                  const Spacer(),
                   Expanded(
                     flex: 8,
                     child: SignupForm(),
                   ),
-                  Spacer(),
+                  const Spacer(),
                 ],
               )
             ],

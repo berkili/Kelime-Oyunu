@@ -4,6 +4,7 @@ import 'package:final_year_project/screens/tabs/achievement_screen.dart';
 import 'package:final_year_project/screens/tabs/profile_screen.dart';
 import 'package:final_year_project/screens/tabs/settings_screen.dart';
 import 'package:final_year_project/screens/welcome/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -52,6 +53,25 @@ class _TabsScreenState extends State<TabsScreen> {
       ),
       onTap: tapHandler,
     );
+  }
+
+  void _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Çıkış yapıldı'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+        (route) => false,
+      );
+    } catch (e) {
+      print('Çıkış yaparken hata oluştu: $e');
+    }
   }
 
   @override
@@ -131,12 +151,7 @@ class _TabsScreenState extends State<TabsScreen> {
               'Çıkış Yap',
               Icons.exit_to_app,
               (() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const WelcomeScreen(),
-                  ),
-                );
+                _signOut();
               }),
             ),
           ],

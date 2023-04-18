@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../welcome/utils/googleSignIn.dart';
+
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
 
@@ -57,7 +59,9 @@ class _TabsScreenState extends State<TabsScreen> {
 
   void _signOut() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await FirebaseAuth.instance.signOut(); // Sign out from Firebase Auth
+      await googleSignIn
+          .signOut(); // Sign out from Google Sign In (if the user has signed in with Google)
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Çıkış yapıldı'),

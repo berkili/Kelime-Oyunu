@@ -27,13 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
-                children: const [
-                  Spacer(),
+                children: [
+                  const Spacer(),
                   Expanded(
                     flex: 8,
                     child: LoginForm(),
                   ),
-                  Spacer(),
+                  const Spacer(),
                 ],
               )
             ],

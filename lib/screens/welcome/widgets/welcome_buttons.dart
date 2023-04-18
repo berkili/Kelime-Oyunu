@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-//BUG: Google ile bir kez giriş yapıldıktan sonra tekrar giriş yapılırken hesap seçme ekranı gelmeden giriş yapıyor.
 class WelcomeButtons extends StatefulWidget {
   const WelcomeButtons({
     Key? key,

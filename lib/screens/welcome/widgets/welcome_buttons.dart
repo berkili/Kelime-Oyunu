@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+//BUG: Google ile giriş yapıldığında şifre sıfırlanıyor.
+
 class WelcomeButtons extends StatefulWidget {
   const WelcomeButtons({
     Key? key,
@@ -91,36 +93,36 @@ class _WelcomeButtonsState extends State<WelcomeButtons> {
           ),
         ),
         const SizedBox(height: 16.0 * 1),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white70,
-            minimumSize: const Size.fromHeight(50),
-            textStyle: const TextStyle(fontSize: 18),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Image(
-                image: AssetImage("assets/images/microsoft-logo.png"),
-                height: 18.0,
-                width: 24,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 24, right: 8),
-                child: Text(
-                  'Microsoft ile giriş yap',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16.0 * 1),
+        // ElevatedButton(
+        //   onPressed: () {},
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: Colors.white70,
+        //     minimumSize: const Size.fromHeight(50),
+        //     textStyle: const TextStyle(fontSize: 18),
+        //   ),
+        //   child: Row(
+        //     mainAxisSize: MainAxisSize.min,
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: const [
+        //       Image(
+        //         image: AssetImage("assets/images/microsoft-logo.png"),
+        //         height: 18.0,
+        //         width: 24,
+        //       ),
+        //       Padding(
+        //         padding: EdgeInsets.only(left: 24, right: 8),
+        //         child: Text(
+        //           'Microsoft ile giriş yap',
+        //           style: TextStyle(
+        //             color: Colors.black,
+        //             fontSize: 20,
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(height: 16.0 * 1),
         Hero(
           tag: "login_btn",
           child: ElevatedButton.icon(

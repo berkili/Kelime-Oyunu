@@ -9,6 +9,8 @@ class LoginForm extends StatefulWidget {
   State<LoginForm> createState() => _LoginFormState();
 }
 
+//TODO: Şifremi unuttum ekranı eklenmeli.
+//TODO: Giriş yapılırken uyarılar ekranda gösterilmeli(Bkn. signup_form.dart)
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();

@@ -1,3 +1,4 @@
+import 'package:final_year_project/screens/login/forgot_password_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../home_statistics/tabs_screen.dart';
@@ -9,7 +10,6 @@ class LoginForm extends StatefulWidget {
   State<LoginForm> createState() => _LoginFormState();
 }
 
-//TODO: Şifremi unuttum ekranı eklenmeli.
 //TODO: Giriş yapılırken uyarılar ekranda gösterilmeli(Bkn. signup_form.dart)
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
@@ -76,6 +76,22 @@ class _LoginFormState extends State<LoginForm> {
                   padding: EdgeInsets.all(16.0),
                   child: Icon(Icons.lock),
                 ),
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ForgotPasswordScreen()),
+              );
+            },
+            child: const Text(
+              "Şifremi unuttum",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),

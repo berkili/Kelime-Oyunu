@@ -20,10 +20,15 @@ class GameHome extends StatefulWidget {
 class _GameHomeState extends State<GameHome> {
   final StreamController<int> controller = StreamController<int>();
   late Random random;
+  bool isSpinning = false; // Track whether the wheel is spinning or not
+  int selectedItem = 0; // Track the selected item on the wheel
+
+  Timer? timer; // Timer to wait for 15 seconds
 
   @override
   void dispose() {
     controller.close();
+    timer?.cancel(); // Cancel the timer if it's active
     super.dispose();
   }
 
@@ -66,114 +71,142 @@ class _GameHomeState extends State<GameHome> {
       height: MediaQuery.of(context).size.height,
       color: Colors.transparent,
       child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(40), topRight: Radius.circular(40)),
-          child: Container(
-            color: white,
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Card(
-                    child: NickAndCategoriesCard(
-                      categories: ["EN-TR", "TR-EN", "SYN", "ANT"],
-                      player1Name: 'berkili',
-                      player2Name: 'berkili1',
-                    ),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
+        child: Container(
+          color: white,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Card(
+                  child: NickAndCategoriesCard(
+                    categories: ["EN-TR", "TR-EN", "SYN", "ANT"],
+                    player1Name: 'berkili',
+                    player2Name: 'berkili1',
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FortuneWheel(
-                        selected: controller.stream,
-                        items: const [
-                          FortuneItem(
-                            child: Text(
-                              'EN-TR',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            ),
-                            style: FortuneItemStyle(
-                              color: wheelOne,
-                              borderColor: black,
-                              borderWidth: 5,
-                            ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.4,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FortuneWheel(
+                    selected: controller.stream,
+                    items: const [
+                      FortuneItem(
+                        child: Text(
+                          'EN-TR',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                          FortuneItem(
-                            child: Text(
-                              'TR-EN',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            ),
-                            style: FortuneItemStyle(
-                              color: wheelTwo,
-                              borderColor: black,
-                              borderWidth: 5,
-                            ),
+                        ),
+                        style: FortuneItemStyle(
+                          color: wheelOne,
+                          borderColor: black,
+                          borderWidth: 5,
+                        ),
+                      ),
+                      FortuneItem(
+                        child: Text(
+                          'TR-EN',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                          FortuneItem(
-                            child: Text(
-                              'SYN',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            ),
-                            style: FortuneItemStyle(
-                              color: wheelThree,
-                              borderColor: black,
-                              borderWidth: 5,
-                            ),
+                        ),
+                        style: FortuneItemStyle(
+                          color: wheelTwo,
+                          borderColor: black,
+                          borderWidth: 5,
+                        ),
+                      ),
+                      FortuneItem(
+                        child: Text(
+                          'SYN',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                          FortuneItem(
-                            child: Text(
-                              'ANT',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            ),
-                            style: FortuneItemStyle(
-                              color: wheelFour,
-                              borderColor: black,
-                              borderWidth: 5,
-                            ),
+                        ),
+                        style: FortuneItemStyle(
+                          color: wheelThree,
+                          borderColor: black,
+                          borderWidth: 5,
+                        ),
+                      ),
+                      FortuneItem(
+                        child: Text(
+                          'ANT',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      )),
+                        ),
+                        style: FortuneItemStyle(
+                          color: wheelFour,
+                          borderColor: black,
+                          borderWidth: 5,
+                        ),
+                      ),
+                    ],
+                    onAnimationEnd: () {
+                      // Called when the wheel stops spinning
+                      setState(() {
+                        isSpinning = false;
+                      });
+                    },
+                  ),
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: TextButton(
-                      onPressed: () {
-                        controller.add(random.nextInt(4));
-                        //BUG: Açılır açılmaz dönüyor çark
-                        //BUG: Dönmeden diğer sayfaya geçiyor.
-                        //TODO: Bu kısımda questions sayfasına kategori parametre olarak gönderilecek.
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Questions()),
-                        );
-                      },
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(primary),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      side: const BorderSide(color: primary)))),
-                      child: MyText(
-                        title: "Döndür",
-                        colors: white,
-                        fontWeight: FontWeight.w500,
-                        size: 18,
-                      )),
-                )
-              ],
-            ),
-          )),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: TextButton(
+                  onPressed: isSpinning ? null : startSpinning,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(primary),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        side: const BorderSide(color: primary),
+                      ),
+                    ),
+                  ),
+                  child: MyText(
+                    title: "Döndür",
+                    colors: white,
+                    fontWeight: FontWeight.w500,
+                    size: 18,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+
+  void startSpinning() {
+    setState(() {
+      isSpinning = true;
+      selectedItem = random.nextInt(4);
+      controller.add(selectedItem);
+    });
+
+    timer = Timer(const Duration(seconds: 15), () {
+      // Wait for 15 seconds before navigating to the next page
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Questions()),
+      );
+    });
   }
 }

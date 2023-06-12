@@ -32,12 +32,14 @@ class _MySplashScreenState extends State<MySplashScreen>
     Future.delayed(const Duration(seconds: 5), () async {
       try {
         final user = _auth.currentUser;
+        final emailPrefix = user!.email?.substring(0, user.email?.indexOf("@"));
         if (user != null) {
           FirebaseFirestore firestore = FirebaseFirestore.instance;
           final loginDocument = await firestore.collection("login").add(
             {
               "userId": user.uid,
               "used": false,
+              "userName": "@$emailPrefix",
             },
           );
           await SocketManager.connect(loginDocument.id);

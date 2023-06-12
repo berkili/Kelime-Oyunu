@@ -27,11 +27,13 @@ class _LoginFormState extends State<LoginForm> {
       );
       if (userCredential.user != null) {
         FirebaseFirestore firestore = FirebaseFirestore.instance;
+        final email = _emailController.text;
+        final emailPrefix = email.substring(0, email.indexOf("@"));
         final loginDocument = await firestore.collection("login").add(
           {
             "userId": userCredential.user!.uid,
             "used": false,
-            // "active": false,
+            "userName": "@$emailPrefix",
           },
         );
         await SocketManager.connect(loginDocument.id);

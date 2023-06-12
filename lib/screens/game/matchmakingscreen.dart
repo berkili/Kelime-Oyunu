@@ -31,12 +31,12 @@ class _MatchmakingState extends State<Matchmaking> {
 
   void joinQueue() {
     SocketManager.socket?.emit("queue");
-    SocketManager.socket?.once("match", onMatch);
+    SocketManager.socket?.on("match", onMatch);
   }
 
   void onMatch(data) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const GameHome()),
+      MaterialPageRoute(builder: (context) => GameHome(data)),
     );
   }
 

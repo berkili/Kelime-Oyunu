@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NickAndCategoriesCard extends StatelessWidget {
-  final String player1Name;
-  final String player2Name;
+  final String? player1Name;
+  final String? player2Name;
   final List<String> categories;
 
   const NickAndCategoriesCard({
@@ -29,7 +29,7 @@ class NickAndCategoriesCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildPlayerCard(player1Name),
+                  _buildPlayerCard(player1Name!),
                   _buildCategories(),
                 ],
               ),
@@ -50,7 +50,7 @@ class NickAndCategoriesCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildPlayerCard(player2Name),
+                  _buildPlayerCard(player2Name!),
                   _buildCategories(),
                 ],
               ),

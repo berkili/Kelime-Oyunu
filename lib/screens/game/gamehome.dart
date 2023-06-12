@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:final_year_project/screens/game/questions.dart';
 import 'package:final_year_project/screens/game/widget/nickCategoriesCard.dart';
+import 'package:final_year_project/screens/socket/socketManager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:final_year_project/screens/game/theme/color.dart';
@@ -11,7 +13,9 @@ import 'package:final_year_project/screens/game/widget/myappbar.dart';
 //TODO:Geri butonuna basıldığında oyundan çıkmak istiyormusunuz diye sor ve eğer kabul ederse yenildi diye kabul et.
 
 class GameHome extends StatefulWidget {
-  const GameHome({Key? key}) : super(key: key);
+  dynamic data;
+
+  GameHome(this.data, {Key? key}) : super(key: key);
 
   @override
   _GameHomeState createState() => _GameHomeState();
@@ -19,6 +23,8 @@ class GameHome extends StatefulWidget {
 
 class _GameHomeState extends State<GameHome> {
   final StreamController<int> controller = StreamController<int>();
+  String? playerFirstName = " ";
+  String? playerSecondName = " ";
   late Random random;
   bool isSpinning = false; // Track whether the wheel is spinning or not
   int selectedItem = 0; // Track the selected item on the wheel
@@ -36,6 +42,15 @@ class _GameHomeState extends State<GameHome> {
   void initState() {
     super.initState();
     random = Random();
+    setPlayerName();
+  }
+
+  void setPlayerName() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    final userName = user?.email?.substring(0, user.email?.indexOf("@"));
+    playerFirstName = "@$userName";
+    playerSecondName = widget.data["userName"];
   }
 
   @override
@@ -80,13 +95,13 @@ class _GameHomeState extends State<GameHome> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 10),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
                 child: Card(
                   child: NickAndCategoriesCard(
-                    categories: ["EN-TR", "TR-EN", "SYN", "ANT"],
-                    player1Name: 'berkili',
-                    player2Name: 'berkili1',
+                    player1Name: playerFirstName,
+                    player2Name: playerSecondName,
+                    categories: const ["EN-TR", "TR-EN", "SYN", "ANT"],
                   ),
                 ),
               ),
@@ -205,7 +220,7 @@ class _GameHomeState extends State<GameHome> {
       // Wait for 15 seconds before navigating to the next page
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Questions()),
+        MaterialPageRoute(builder: (context) => const Questions()),
       );
     });
   }

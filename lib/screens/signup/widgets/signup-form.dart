@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../home_statistics/tabs_screen.dart';
 
+//TODO: Kayıt olduktan sonra oto giriş yapmasın.
+
 class SignupForm extends StatefulWidget {
   SignupForm({super.key});
 

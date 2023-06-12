@@ -1,4 +1,5 @@
 import 'package:final_year_project/screens/game/gamehome.dart';
+import 'package:final_year_project/screens/game/matchmakingscreen.dart';
 import 'package:final_year_project/screens/game/questions.dart';
 import 'package:final_year_project/screens/home_statistics/widgets/home_background.dart';
 import 'package:final_year_project/screens/home_statistics/widgets/home_info.dart';
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => const GameHome()));
+                    builder: (BuildContext context) => const Matchmaking()));
               },
               style: ElevatedButton.styleFrom(
                 // ignore: todo

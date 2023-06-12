@@ -1,12 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/screens/home_statistics/tabs_screen.dart';
 import 'package:final_year_project/screens/login/login-screen.dart';
 import 'package:final_year_project/screens/signup/signup-screen.dart';
+import 'package:final_year_project/screens/socket/socketManager.dart';
 import 'package:final_year_project/screens/welcome/widgets/or-divider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-//BUG: Google ile giriş yapıldığında şifre sıfırlanıyor.
 
 class WelcomeButtons extends StatefulWidget {
   const WelcomeButtons({
@@ -16,6 +16,8 @@ class WelcomeButtons extends StatefulWidget {
   @override
   State<WelcomeButtons> createState() => _WelcomeButtonsState();
 }
+
+//TODO: HATAYI TOAST'LA GÖSTER
 
 class _WelcomeButtonsState extends State<WelcomeButtons> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -54,15 +56,28 @@ class _WelcomeButtonsState extends State<WelcomeButtons> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            User? user = await signInWithGoogle();
-            if (user != null) {
-              // ignore: use_build_context_synchronously
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const TabsScreen(),
-                ),
-              );
+            try {
+              User? user = await signInWithGoogle();
+              if (user != null) {
+                FirebaseFirestore firestore = FirebaseFirestore.instance;
+                final loginDocument = await firestore.collection("login").add(
+                  {
+                    "userId": user.uid,
+                    "used": false,
+                    // "active": false,
+                  },
+                );
+                await SocketManager.connect(loginDocument.id);
+                // ignore: use_build_context_synchronously
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TabsScreen(),
+                  ),
+                );
+              }
+            } catch (e) {
+              print(e);
             }
           },
           style: ElevatedButton.styleFrom(

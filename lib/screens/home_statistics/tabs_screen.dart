@@ -1,5 +1,6 @@
 import 'package:final_year_project/screens/home_statistics/home_screen.dart';
 import 'package:final_year_project/screens/home_statistics/statistics_screen.dart';
+import 'package:final_year_project/screens/socket/socketManager.dart';
 import 'package:final_year_project/screens/tabs/achievement_screen.dart';
 import 'package:final_year_project/screens/tabs/profile_screen.dart';
 import 'package:final_year_project/screens/tabs/settings_screen.dart';
@@ -62,6 +63,7 @@ class _TabsScreenState extends State<TabsScreen> {
       await FirebaseAuth.instance.signOut(); // Sign out from Firebase Auth
       await googleSignIn
           .signOut(); // Sign out from Google Sign In (if the user has signed in with Google)
+      SocketManager.disconnect();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Çıkış yapıldı'),

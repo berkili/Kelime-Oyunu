@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/screens/home_statistics/tabs_screen.dart';
+import 'package:final_year_project/screens/socket/socketManager.dart';
+import 'package:final_year_project/screens/welcome/utils/googleSignIn.dart';
 import 'package:final_year_project/screens/welcome/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,20 +29,38 @@ class _MySplashScreenState extends State<MySplashScreen>
       duration: const Duration(seconds: 2),
     )..repeat();
 
-    Future.delayed(const Duration(seconds: 5), () {
-      final user = _auth.currentUser;
-      if (user != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const TabsScreen()),
-        );
-      } else {
+    Future.delayed(const Duration(seconds: 5), () async {
+      try {
+        final user = _auth.currentUser;
+        if (user != null) {
+          FirebaseFirestore firestore = FirebaseFirestore.instance;
+          final loginDocument = await firestore.collection("login").add(
+            {
+              "userId": user.uid,
+              "used": false,
+            },
+          );
+          await SocketManager.connect(loginDocument.id);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const TabsScreen()),
+          );
+        } else {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+          );
+        }
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (e) {
+        print(e);
+        SocketManager.disconnect();
+        await FirebaseAuth.instance.signOut(); // Sign out from Firebase Auth
+        await googleSignIn.signOut();
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const WelcomeScreen()),
         );
       }
-      setState(() {
-        _isLoading = false;
-      });
     });
   }
 

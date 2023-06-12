@@ -1,7 +1,9 @@
 import 'package:final_year_project/screens/login/forgot_password_screen.dart';
+import 'package:final_year_project/screens/socket/socketManager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../home_statistics/tabs_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -24,6 +26,15 @@ class _LoginFormState extends State<LoginForm> {
         password: _passwordController.text,
       );
       if (userCredential.user != null) {
+        FirebaseFirestore firestore = FirebaseFirestore.instance;
+        final loginDocument = await firestore.collection("login").add(
+          {
+            "userId": userCredential.user!.uid,
+            "used": false,
+            // "active": false,
+          },
+        );
+        await SocketManager.connect(loginDocument.id);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
@@ -37,9 +48,16 @@ class _LoginFormState extends State<LoginForm> {
         print('Böyle bir kullanıcı bulunamadı');
       } else if (e.code == 'wrong-password') {
         print('Yanlış şifre');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Yanlış şifre"),
+        ));
       }
     } catch (e) {
       print(e);
+      SocketManager.disconnect();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Bağlanırken bir hata oluştu."),
+      ));
     }
   }
 

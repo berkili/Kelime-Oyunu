@@ -1,0 +1,81 @@
+question,a,b,c,d,answer,question_class
+dismissal,ödül,önemseme,yanıt verme,dikkate almama,d,0
+chair,öğretmen,ayak,sandalye,sürücü koltuğu,c,0
+book,not ,kitap,rezervasyon,planlama,b,0
+dog,köpek,şeytan,korkak,kedi,a,0
+table,tartışma,diyet,yemek,masa,d,0
+car,anahtar,kutu,araba,bekar,c,0
+tree,uçak,ağaç,kanat,yaprak,b,0
+phone,telefon,yiyecek,telsiz,uydu telefonu,a,0
+music,gitar,sol anahtarı,yazılım,müzik,d,0
+window,kapı,ayna,pencere,gözlük,c,0
+sun,hedef,güneş,parmak,ısı,b,0
+time,zaman,saat,para,tane,a,0
+ball,yemek,mücevher,hava,top,d,0
+door,araba,anahtar,kapı,pencere,c,0
+pen,fırça,dolma kalem,uçlu kalem,kurşun kalem,b,0
+train,tren,spor,araba,tramvay,a,0
+water,göl,deniz ,okyanus,su,d,0
+flower,lale,papatya,çiçek,gül,c,0
+bookcase,masa,kitaplık,dolap,yatak,b,0
+apple,elma,şeftali,kiraz,çilek,a,0
+araba,phone,chair,bike,car,d,1
+ev,chair,table,home/house,tree,c,1
+bilgisayar,laptop,computer,tablet,phone,b,1
+yemek,food,rice,chicken,table,a,1
+şapka,coat,shoe,chair,hat,d,1
+yıldız,universe,sun,star,moon,c,1
+top,handball,ball,football,basketball,b,1
+gözlük,glasses,hat,chair,phone,a,1
+cep,sim card,table,phone,mobile phone,d,1
+güneş,rainy,sunglasses,sun,sunny,c,1
+anahtar,house,key,lock,doorknob,b,1
+rüzgar,wind,lamp,sunny,rainy,a,1
+ayakkabı,overcoat,coat,shoes,shoe,d,1
+deniz,eagle,ocean,sea,tree,c,1
+saat,minute,clock,hour,seconds,b,1
+renk,color,table,book,library,a,1
+bardak,sunglasses,bird,glasses,cup,d,1
+çanta,book,car,bag,bags,c,1
+uçak,car,plane,bus,train,b,1
+balık,fish,shoe,table,book,a,1
+angry,happy,content,calm,wrathful,d,2
+ask,answer,question,respond,reply,b,2
+begin,start,end,finish,conclude,a,2
+brave,cowardly,timid,courageous,fearful,c,2
+come,go,leave,approach,depart,c,2
+cry,laugh,weep,smile,rejoice,b,2
+dangerous,hazardous,safe,secure,harmless,a,2
+do,undo,cease,stop,execute,d,2
+end,begin,start,initiate,stop,d,2
+explain,clarify,confuse,misunderstand,obfuscate,a,2
+fall,rise,ascend,drop,climb,c,2
+fast,slow,quick,sluggish,leisurely,b,2
+get,give,obtain,lose,release,b,2
+good,bad,poor,excellent,evil,c,2
+help,aid,hinder,obstruct,halt,a,2
+hurt,heal,soothe,comfort,damage,d,2
+important,insignificant,vital,unimportant,irrelevant,b,2
+kill,slay,spare,preserve,protect,a,2
+lazy,energetic,industrious,diligent,indolent,d,2
+old,young,new,aged,fresh,c,2
+artificial,natural,synthetic,man-made,created,a,3
+arrive,reach,depart,come,again,b,3
+argue,debate,agree,dispute,discuss,b,3
+all,every,whole,none,complete,c,3
+amateur,professional,novice,beginner,nonprofessional,a,3
+alive,living,animated,vital,dead,d,3
+adult,grown-up,child,mature,full-grown,b,3
+advanced,sophisticated,progressed,elementary,developed,c,3
+ancestor,forefather,progenitor,descendant,predescessor,c,3
+angel,guardian,seraph,cherub,devil,d,3
+boy,girl,lad,youth,son,a,3
+build,destroy,construct,create,erect,a,3
+buy,purchase,acquire,sell,procure,c,3
+catch,capture,grab,snag,miss,d,3
+certainly,definitely,surely,absolutely,probably,d,3
+divide,separate,unite,split,partition,b,3
+even,odd,equal,balanced,level,a,3
+forbid,prohibit,ban,allow,restrict,c,3
+give,provide,take,grant,offer,b,3
+interrupt,disturb,interfere,disrupt,continue,d,3

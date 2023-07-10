@@ -32,6 +32,7 @@ class SocketManager {
           completer.completeError(
             new Exception('unauthorized'),
           );
+          disconnect();
         }
       });
     });
@@ -40,18 +41,19 @@ class SocketManager {
       completer.completeError(
         new Exception('connect_error'),
       );
+      disconnect();
     });
     socket!.once('connect_timeout', (data) {
       completer.completeError(
         new Exception('connect_timeout'),
       );
+      disconnect();
     });
     return completer.future;
   }
 
   static disconnect() {
-    socket?.disconnect();
-    socket?.destroy();
+    socket?.dispose();
     socket = null;
   }
 }

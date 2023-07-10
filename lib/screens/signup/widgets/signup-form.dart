@@ -1,3 +1,5 @@
+import 'package:final_year_project/screens/welcome/welcome_screen.dart';
+import 'package:final_year_project/screens/welcome/widgets/welcome_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -136,10 +138,11 @@ class _SignupFormState extends State<SignupForm> {
                     )
                         .then(
                       (value) {
+                        FirebaseAuth.instance.signOut();
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const TabsScreen()),
+                              builder: (context) => const WelcomeScreen()),
                         );
                       },
                     );

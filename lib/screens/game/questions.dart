@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:custom_timer/custom_timer.dart';
+import 'package:final_year_project/screens/socket/socketManager.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:final_year_project/screens/game/levelresult.dart';
@@ -8,7 +9,9 @@ import 'package:final_year_project/screens/game/theme/color.dart';
 import 'package:final_year_project/screens/game/widget/mytext.dart';
 
 class Questions extends StatefulWidget {
-  const Questions({Key? key}) : super(key: key);
+  Questions(this.data, {Key? key}) : super(key: key);
+
+  final dynamic data;
 
   @override
   _QuestionsState createState() => _QuestionsState();
@@ -24,39 +27,47 @@ class _QuestionsState extends State<Questions> {
   int answercnt = 1;
   int selectAnswer = -1;
 
-  List question = [
-    "Which was first Indian movie released commercially in Italy?",
-    "Who is Prime Minister of India in 2022?",
-    "Which was first Indian movie released commercially in USA?",
-    "who is Indian Cricket Team Captain - 2022 ?",
-    "Who is Neeraj panday ?",
-    "Who is Indian Women Cricket Team Captain?",
-    "Which was first Indian movie released commercially in UK?",
-    "Who is God Of Cricket ?",
-    "Who is Gujarat CM ?",
-    "Which was first Indian movie released commercially in India?"
-  ];
-  List answer = [
-    "Mother India,Jocker,RRR,Pushpa",
-    "RRR,Bahubali,Pushpa,Jocker",
-    "Bahubali,RRR,Jocker,Pushpa",
-    "RRR,Bahubali,Pushpa,Jocker",
-    "Pushpa,RRR,Jocker,Bahubali",
-    "RRR,Bahubali,Pushpa,Jocker",
-    "Jocker,RRR,Bahubali,Pushpa",
-    "Pushpa,Bahubali,Jocker,RRR",
-    "RRR,Bahubali,Pushpa,Jocker",
-    "Bahubali,RRR,Jocker,Pushpa"
-  ];
+  int correctAnswersCount = 0;
+
+  bool isCorrect = false;
+
+  List question = [];
+  List answer = [];
+  List rightAnswer = [];
+  List category = ["English-Turkish", "Turkish-English", "Synonym", "Antonym"];
+
+  List<int> correctAnswerIndices = []; // Yeni eklenen liste
+
+  void setQuestions() {
+    List<dynamic> questions = widget.data;
+
+    question.clear();
+    answer.clear();
+    rightAnswer.clear();
+
+    for (int i = 0; i < questions.length; i++) {
+      Map<String, dynamic> item = questions[i];
+
+      question.add(item['soru']);
+      rightAnswer.add(item['dogru_cevap']);
+
+      String choices =
+          "A. ${item['a']},B. ${item['b']},C. ${item['c']},D. ${item['d']}";
+      answer.add(choices);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     counter();
+    setQuestions();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    timer?.cancel();
     super.dispose();
   }
 
@@ -68,12 +79,11 @@ class _QuestionsState extends State<Questions> {
           timer?.cancel();
           percent = 0;
           print(percent);
+          _checkAnswer();
         }
       });
     });
   }
-
-  double cntvalue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +102,7 @@ class _QuestionsState extends State<Questions> {
           preferredSize: const Size.fromHeight(60.0),
           child: AppBar(
             title: MyText(
-              title: "Soru Kategorisi",
+              title: category[quecnt],
               size: 18,
               fontWeight: FontWeight.w400,
               colors: white,
@@ -133,11 +143,11 @@ class _QuestionsState extends State<Questions> {
                                 width: 70,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: primary, width: 4),
-                                    color: white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(100))),
+                                  border: Border.all(color: primary, width: 4),
+                                  color: white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(100)),
+                                ),
                                 child: CircularPercentIndicator(
                                   radius: 30.0,
                                   lineWidth: 4.0,
@@ -146,9 +156,10 @@ class _QuestionsState extends State<Questions> {
                                   center: Text(
                                     percent.toInt().toString(),
                                     style: const TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black),
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                   backgroundColor: Colors.grey,
                                   circularStrokeCap: CircularStrokeCap.round,
@@ -158,13 +169,6 @@ class _QuestionsState extends State<Questions> {
                             ), // Question Count
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 15),
-                      MyText(
-                        title: "Bollywood",
-                        fontWeight: FontWeight.w500,
-                        size: 16,
-                        colors: textColorGrey,
                       ),
                       const SizedBox(height: 15),
                       MyText(
@@ -181,119 +185,68 @@ class _QuestionsState extends State<Questions> {
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         height: MediaQuery.of(context).size.height * 0.35,
                         child: GridView.builder(
-                            shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: answercnt,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10,
-                              childAspectRatio: answercnt == 1
-                                  ? MediaQuery.of(context).size.width /
-                                      (MediaQuery.of(context).size.height / 12)
-                                  : MediaQuery.of(context).size.width /
-                                      (MediaQuery.of(context).size.height / 7),
-                            ),
-                            itemCount: 4,
-                            itemBuilder: (BuildContext ctx, index) {
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    selectAnswer = index;
-                                  });
-                                },
-                                child: selectAnswer == index
-                                    ? Container(
-                                        alignment: Alignment.centerLeft,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 50,
-                                        padding: const EdgeInsets.only(
-                                            left: 25, right: 10),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: green, width: 0.4),
-                                            color: green,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(25))),
-                                        child: MyText(
-                                          title: "A. Ankhen",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxline: 2,
-                                          size: 18,
-                                          colors: white,
-                                          fontWeight: FontWeight.w500,
-                                          textalign: TextAlign.left,
-                                        ),
-                                      )
-                                    : Container(
-                                        alignment: Alignment.centerLeft,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 50,
-                                        padding: const EdgeInsets.only(
-                                            left: 25, right: 10),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: textColorGrey,
-                                                width: 0.4),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(25))),
-                                        child: MyText(
-                                          title: "A. Ankhen",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxline: 2,
-                                          size: 16,
-                                          textalign: TextAlign.left,
-                                        ),
-                                      ),
-                              );
-                            }),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: answercnt,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: answercnt == 1
+                                ? MediaQuery.of(context).size.width /
+                                    (MediaQuery.of(context).size.height / 12)
+                                : MediaQuery.of(context).size.width /
+                                    (MediaQuery.of(context).size.height / 7),
+                          ),
+                          itemCount: 4,
+                          itemBuilder: (BuildContext ctx, index) {
+                            List<String> choices = answer[quecnt].split(',');
+
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  selectAnswer = index;
+                                  timer?.cancel();
+                                  percent = 0;
+                                  _checkAnswer();
+                                });
+                              },
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                width: MediaQuery.of(context).size.width,
                                 height: 50,
-                                child: TextButton(
-                                    onPressed: () {
-                                      if (quecnt < question.length - 1) {
-                                        quecnt++;
-                                      } else {
-                                        Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        const LevelResult()));
-                                      }
-                                      setState(() {});
-                                    },
-                                    child: MyText(
-                                      title: "Answer It",
-                                      colors: white,
-                                      fontWeight: FontWeight.w500,
-                                      size: 16,
-                                    ),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(primary),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(25.0),
-                                                side: const BorderSide(
-                                                    color: primary))))),
+                                padding:
+                                    const EdgeInsets.only(left: 25, right: 10),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: selectAnswer == index
+                                        ? Colors.green
+                                        : textColorGrey,
+                                    width: 0.4,
+                                  ),
+                                  color: selectAnswer == index
+                                      ? isCorrect
+                                          ? Colors.green
+                                          : Colors.red
+                                      : Colors.transparent,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(25)),
+                                ),
+                                child: MyText(
+                                  title: choices[index].toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxline: 2,
+                                  size: 18,
+                                  colors: selectAnswer == index
+                                      ? Colors.white
+                                      : textColorGrey,
+                                  fontWeight: FontWeight.w500,
+                                  textalign: TextAlign.left,
+                                ),
                               ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -303,5 +256,56 @@ class _QuestionsState extends State<Questions> {
         ),
       ),
     );
+  }
+
+  void _checkAnswer() {
+    int selectedAnswerIndex = selectAnswer;
+    String correctAnswer = rightAnswer[quecnt].trim().toLowerCase();
+
+    List<String> answerList = answer[quecnt].split(',');
+    String selectedAnswer = '';
+    if (selectedAnswerIndex >= 0 && selectedAnswerIndex < answerList.length) {
+      selectedAnswer =
+          answerList[selectedAnswerIndex].split('.').first.toLowerCase();
+    }
+
+    isCorrect = selectedAnswer == correctAnswer;
+
+    if (!isCorrect) {
+      String correctChoice = correctAnswer;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Doğru şık: $correctChoice"),
+      ));
+    } else {
+      correctAnswerIndices
+          .add(quecnt); // Doğru bilinen sorunun index numarasını kaydet
+    }
+
+    Timer(Duration(seconds: 2), () {
+      if (!mounted) return;
+      setState(() {
+        if (quecnt < question.length - 1) {
+          quecnt += 1;
+          answercnt = 1;
+          timer?.cancel();
+          percent = 0;
+          selectAnswer = -1;
+          counter();
+        } else {
+          setCorrectCategory();
+        }
+      });
+    });
+  }
+
+  void setCorrectCategory() {
+    SocketManager.socket?.emit('correctAnswers', correctAnswerIndices);
+    SocketManager.socket?.on("result", onResult);
+  }
+
+  void onResult(data) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => LevelResult(data),
+    ));
   }
 }
